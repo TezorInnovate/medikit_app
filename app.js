@@ -56,7 +56,10 @@ function initDrawers() {
         <input type="time" id="time-${i}" class="custom-input">
       </div>
       
-      <button class="btn save-btn" onclick="saveSettings(${i})">SAVE CONFIG</button>
+      <div style="display: flex; gap: 10px; margin-top: -0.5rem; width: 100%;">
+        <button class="btn save-btn" onclick="saveSettings(${i})">SAVE</button>
+        <button class="btn delete-btn" onclick="deleteSettings(${i})">DELETE</button>
+      </div>
 
       <div class="card-actions">
         <button class="btn btn-outline-cyan" onclick="operateDrawer(${i}, 'open')">OPEN</button>
@@ -77,6 +80,17 @@ window.saveSettings = function(id) {
     alarmTime: time
   }).then(() => {
     showToast(`Drawer ${id} settings saved!`);
+  });
+};
+
+window.deleteSettings = function(id) {
+  update(ref(db, `drawers/${id}`), {
+    name: "",
+    alarmTime: ""
+  }).then(() => {
+    showToast(`Drawer ${id} settings deleted!`);
+    document.getElementById(`name-${id}`).value = '';
+    document.getElementById(`time-${id}`).value = '';
   });
 };
 

@@ -247,6 +247,20 @@ h1 span {
   background: rgba(255, 255, 255, 0.1);
 }
 
+.delete-btn {
+  width: 100%;
+  margin-top: -0.5rem;
+  font-size: 0.85rem;
+  padding: 0.5rem;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--accent-red);
+  border: 1px solid transparent;
+}
+.delete-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--accent-red);
+}
+
 /* Alert Overlay */
 .alert-overlay {
   position: fixed;
