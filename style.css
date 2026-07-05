@@ -55,8 +55,18 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
   padding: 1.5rem 2rem;
   margin: 2rem;
+}
+
+@media (max-width: 768px) {
+  .main-header {
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
 .connection-status {

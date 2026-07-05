@@ -109,18 +109,18 @@ window.operateDrawer = function(id, action) {
   }
   
   // Send command
-  set(ref(db, 'command'), `${action}_${id}`);
+  set(ref(db, 'command'), `${action}_${id}_${Date.now()}`);
   showToast(`Command sent: ${action.toUpperCase()} Drawer ${id}`);
 };
 
 // Global Commands
 openAllBtn.addEventListener('click', () => {
-  set(ref(db, 'command'), 'open_all');
+  set(ref(db, 'command'), `open_all_${Date.now()}`);
   showToast('Opening all drawers...');
 });
 
 closeAllBtn.addEventListener('click', () => {
-  set(ref(db, 'command'), 'close_all');
+  set(ref(db, 'command'), `close_all_${Date.now()}`);
   showToast('Closing all drawers...');
 });
 
