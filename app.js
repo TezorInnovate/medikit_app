@@ -24,6 +24,8 @@ const alertOverlay = document.getElementById('alertOverlay');
 const alertMessage = document.getElementById('alertMessage');
 const acceptBtn = document.getElementById('acceptBtn');
 const toastEl = document.getElementById('toast');
+const statusDot = document.getElementById('statusDot');
+const statusText = document.getElementById('statusText');
 
 // State
 let drawersData = {};
@@ -122,8 +124,35 @@ closeAllBtn.addEventListener('click', () => {
   showToast('Closing all drawers...');
 });
 
+// Connection Status Helper
+let lastHeartbeatTime = 0;
+function updateConnectionStatus(isOnline) {
+  if (isOnline) {
+    statusDot.className = 'status-dot online';
+    statusText.textContent = 'Connected';
+  } else {
+    statusDot.className = 'status-dot offline';
+    statusText.textContent = 'Disconnected';
+  }
+}
+
 // Real-time Listeners
 function setupListeners() {
+  // Listen to heartbeat
+  onValue(ref(db, 'device_status/heartbeat'), (snapshot) => {
+    if (snapshot.exists()) {
+      lastHeartbeatTime = Date.now();
+      updateConnectionStatus(true);
+    }
+  });
+
+  // Watchdog timer to check if heartbeat is stale
+  setInterval(() => {
+    if (Date.now() - lastHeartbeatTime > 15000) {
+      updateConnectionStatus(false);
+    }
+  }, 5000);
+
   // Listen to drawers state
   onValue(ref(db, 'drawers'), (snapshot) => {
     const data = snapshot.val();
